@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f3eee4">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="考研错题手账：按科目、模块、章节、考点记录，按间隔复习和重做，让每一道错题都有下一次。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="错题手账">
+  <meta name="application-name" content="错题手账">
+  <meta name="format-detection" content="telephone=no">
+  <title>错题手账 · 考研复盘</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23c45f43'/%3E%3Cpath d='M16 21c6-3 11-2 16 2v23c-5-4-10-5-16-2V21Zm16 2c5-4 10-5 16-2v23c-6-3-11-2-16 2V23Z' fill='none' stroke='%23fff8ee' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 图标库 -->
+  <svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.8c3.7-1.8 7.1-1.5 10 .6v13.5c-2.9-2.1-6.3-2.4-10-.6V5.8Z"/><path d="M20 5.8c-3.7-1.8-7.1-1.5-10 .6v13.5c2.9-2.1 6.3-2.4 10-.6V5.8Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><path d="m15.5 8.5 2-2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12.4 3.5c.5 3.4-2.1 4.7-3.2 6.2-1-1.1-1.4-2.2-1.2-3.4-2 1.7-3.5 4-3.5 6.6a7.5 7.5 0 0 0 15 0c0-4.4-3.1-7.4-7.1-9.4Z"/><path d="M12 20a3.6 3.6 0 0 1-3.6-3.6c0-2.1 1.6-3.2 2.4-4.9.8 1.3 2.4 2.3 3.2 4.2.4 1.3.3 2.5-.6 3.4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.2 12.2 2.5 2.5 5.3-5.4"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m14.8 5.2 4 4M4.8 19.2l1-5.2L15.7 4a1.6 1.6 0 0 1 2.3 0l2 2a1.6 1.6 0 0 1 0 2.3L10 18.2l-5.2 1Z"/><path d="m5.8 14 4.2 4.2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9 7V4.8h6V7M6.8 7l.8 12.2h8.8L17.2 7M10 10.5v5M14 10.5v5"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19.5h14"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V5m0 0 4 4m-4-4L8 9M5 19.5h14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.8v12.4L19 12 8.5 5.8Z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.8" y="4.5" width="16.4" height="15" rx="2.2"/><circle cx="8.7" cy="9.3" r="1.5"/><path d="m4.8 17 4.6-4.5 3.3 3 2.8-2.5 4 4"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M10.2 6.5c-3.2.7-5 2.7-5 6v5h5.2v-5.2H7.8c.1-2 .8-3 2.4-3.6V6.5Zm8.6 0c-3.2.7-5 2.7-5 6v5h5.2v-5.2h-2.6c.1-2 .8-3 2.4-3.6V6.5Z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2.3"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10M12 14v2.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2.2"/><path d="M4 9.5h16M8 3.8v3.4M16 3.8v3.4"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.5c.7 4.2 2.3 6 6.5 6.7-4.2.7-5.8 2.5-6.5 6.7-.7-4.2-2.3-6-6.5-6.7 4.2-.7 5.8-2.5 6.5-6.7Z"/><path d="M18.5 15.5c.3 1.9 1 2.7 2.9 3-1.9.3-2.6 1.1-2.9 3-.3-1.9-1-2.7-2.9-3 1.9-.3 2.6-1.1 2.9-3Z"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15m0 0-5-5m5 5-5 5"/></symbol>
+    <symbol id="i-reload" viewBox="0 0 24 24"><path d="M19 8.5A8 8 0 1 0 20 14"/><path d="M19 4.5v4h-4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M3.5 12S7 6.5 12 6.5 20.5 12 20.5 12 17 17.5 12 17.5 3.5 12 3.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19.5V4.5M4 19.5h16"/><path d="M8 16.5v-4.2M12 16.5V8.3M16 16.5v-6.2M20 16.5v-2.6"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.4 1.5M9 3.5h6M12 3.5v2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3.8 8 4.1-8 4.1-8-4.1 8-4.1Z"/><path d="m4 12 8 4.1 8-4.1M4 16.1l8 4.1 8-4.1"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 21V4.2M6 4.5h11l-2.3 4.1L17 12.7H6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3.8M12 3.8 8 7.8M12 3.8l4 4M6 12.5V19a1.8 1.8 0 0 0 1.8 1.8h8.4A1.8 1.8 0 0 0 18 19v-6.5"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="侧边栏">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none">
+            <path d="M8.8 13.2c4.7-2.3 9-2 13.4.8v19.6c-4.4-2.8-8.7-3.1-13.4-.8V13.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M22.2 14c4.4-2.8 8.7-3.1 13.4-.8v19.6c-4.7-2.3-9-2-13.4.8V14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M14.5 18.8c2.1.1 3.7.6 5 1.5M14.5 23.7c2.1.1 3.7.6 5 1.5M33.3 13.2v9.2L30.8 20l-2.5 2.4v-9.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="brand-copy">
+          <h1>错题手账</h1>
+          <p>把失误，酿成经验</p>
+        </div>
+        <span class="brand-seal" aria-hidden="true">记</span>
+      </div>
+
+      <section class="today-card" aria-labelledby="todayHeading">
+        <div class="today-card-top">
+          <div>
+            <p class="micro-label" id="todayHeading">TODAY · 今天</p>
+            <p class="today-weekday" id="todayWeekday">星期一</p>
+          </div>
+          <div class="today-date">
+            <span id="todayYear">2026</span>
+            <strong><span id="todayMonth">10</span><i>月</i><span id="todayDay">27</span><i>日</i></strong>
+          </div>
+        </div>
+        <div class="today-count-row">
+          <span>今日收录</span>
+          <p><strong id="todayCount">0</strong> 道</p>
+        </div>
+        <div class="week-strip" id="weekStrip" aria-label="最近七天记录情况"></div>
+      </section>
+
+      <nav class="main-nav" aria-label="错题分类">
+        <p class="nav-label">错题本</p>
+        <button class="nav-item is-active" type="button" data-view="all" aria-current="page">
+          <span class="nav-icon"><svg><use href="#i-book"></use></svg></span>
+          <span>全部错题</span>
+          <span class="nav-count" data-count="all">0</span>
+        </button>
+        <button class="nav-item" type="button" data-view="due">
+          <span class="nav-icon"><svg><use href="#i-clock"></use></svg></span>
+          <span>今日复习</span>
+          <span class="nav-count nav-count-accent" data-count="due">0</span>
+        </button>
+        <button class="nav-item" type="button" data-view="mastered">
+          <span class="nav-icon"><svg><use href="#i-check-circle"></use></svg></span>
+          <span>已掌握</span>
+          <span class="nav-count" data-count="mastered">0</span>
+        </button>
+      </nav>
+
+      <section class="subject-section" aria-labelledby="subjectHeading">
+        <div class="section-title-row">
+          <p class="nav-label" id="subjectHeading">按学科</p>
+          <button class="text-btn" type="button" id="resetSubject">重置</button>
+        </div>
+        <div class="subject-list" id="subjectList">
+          <p class="sidebar-empty">还没有学科记录</p>
+        </div>
+      </section>
+
+      <div class="sidebar-footer">
+        <p class="privacy-note"><svg><use href="#i-lock"></use></svg><span>记录与图片只保存在这台设备</span></p>
+        <div class="backup-row">
+          <button type="button" class="backup-btn" id="exportBtn"><svg><use href="#i-download"></use></svg>导出备份</button>
+          <button type="button" class="backup-btn" id="importBtn"><svg><use href="#i-upload"></use></svg>导入</button>
+          <input type="file" id="importFile" accept=".json,application/json" hidden>
+        </div>
+      </div>
+    </aside>
+
+    <button class="sidebar-backdrop" type="button" id="sidebarBackdrop" aria-label="关闭导航" hidden></button>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-label="打开导航" aria-expanded="false" aria-controls="sidebar">
+            <svg><use href="#i-menu"></use></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="breadcrumb-muted">我的错题</span>
+            <svg class="breadcrumb-arrow"><use href="#i-chevron-right"></use></svg>
+            <strong id="crumbCurrent">全部错题</strong>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-ghost dashboard-trigger" type="button" id="dashboardBtn">
+            <svg><use href="#i-chart"></use></svg>
+            <span>学情</span>
+          </button>
+          <button class="btn btn-ghost review-trigger" type="button" id="reviewBtn">
+            <svg><use href="#i-play"></use></svg>
+            <span>开始复习</span>
+            <span class="due-bubble" id="reviewCount">0</span>
+          </button>
+          <button class="btn btn-primary" type="button" id="addBtn">
+            <svg><use href="#i-plus"></use></svg>
+            <span>记一道错题</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="page">
+        <section class="hero" aria-labelledby="heroTitle">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span>POSTGRAD MISTAKE NOTES</p>
+            <h2 id="heroTitle">每一道错题，<em>都是提分线索。</em></h2>
+            <p class="hero-sub">分类记录 · 间隔复习 · 重做验证，把「看懂了」变成「会做了」。</p>
+          </div>
+          <div class="hero-mark" aria-hidden="true">
+            <span class="hero-mark-ring"></span>
+            <span class="hero-mark-text">错<br>题<br>不<br>二</span>
+          </div>
+        </section>
+
+        <section class="stats-bar" aria-label="错题统计">
+          <div class="stat">
+            <span class="stat-icon"><svg><use href="#i-book"></use></svg></span>
+            <p class="stat-label">累计错题</p>
+            <p class="stat-value"><strong id="statTotal">0</strong><span>道</span></p>
+            <p class="stat-foot" id="statTotalFoot">从第一道开始</p>
+          </div>
+          <div class="stat">
+            <span class="stat-icon stat-icon-warm"><svg><use href="#i-clock"></use></svg></span>
+            <p class="stat-label">今日到期</p>
+            <p class="stat-value"><strong id="statDue">0</strong><span>道</span></p>
+            <p class="stat-foot" id="statDueFoot">今天的你，准备好了吗</p>
+          </div>
+          <div class="stat">
+            <span class="stat-icon stat-icon-green"><svg><use href="#i-target"></use></svg></span>
+            <p class="stat-label">掌握率</p>
+            <p class="stat-value"><strong id="statRate">0</strong><span>%</span></p>
+            <div class="stat-meter" aria-hidden="true"><i id="statMeter"></i></div>
+          </div>
+          <div class="stat">
+            <span class="stat-icon stat-icon-red"><svg><use href="#i-flame"></use></svg></span>
+            <p class="stat-label">连续学习</p>
+            <p class="stat-value"><strong id="statStreak">0</strong><span>天</span></p>
+            <p class="stat-foot" id="statStreakFoot">今天也来记一笔吧</p>
+          </div>
+        </section>
+
+        <section class="toolbar" aria-label="搜索与筛选">
+          <label class="search-box">
+            <svg><use href="#i-search"></use></svg>
+            <input type="search" id="searchInput" placeholder="搜索题目、考点、来源…" autocomplete="off" aria-label="搜索错题">
+            <kbd>/</kbd>
+          </label>
+          <div class="filter-controls">
+            <label class="select-wrap">
+              <span class="sr-only">学科筛选</span>
+              <select id="subjectFilter" aria-label="按学科筛选">
+                <option value="all">全部学科</option>
+              </select>
+              <svg><use href="#i-chevron-down"></use></svg>
+            </label>
+            <label class="select-wrap">
+              <span class="sr-only">模块筛选</span>
+              <select id="moduleFilter" aria-label="按模块筛选">
+                <option value="all">全部模块</option>
+              </select>
+              <svg><use href="#i-chevron-down"></use></svg>
+            </label>
+            <label class="select-wrap">
+              <span class="sr-only">掌握阶段筛选</span>
+              <select id="stageFilter" aria-label="按学习阶段或掌握阶段筛选">
+                <option value="all">全部阶段</option>
+                <optgroup label="学习阶段">
+                  <option value="study:基础">基础</option>
+                  <option value="study:强化">强化</option>
+                  <option value="study:真题">真题</option>
+                  <option value="study:冲刺">冲刺</option>
+                </optgroup>
+                <optgroup label="掌握阶段">
+                  <option value="mastery:0">未复盘</option>
+                  <option value="mastery:1">一刷</option>
+                  <option value="mastery:2">二刷</option>
+                  <option value="mastery:3">三刷</option>
+                  <option value="mastery:4">四刷</option>
+                  <option value="mastery:5">稳了</option>
+                </optgroup>
+              </select>
+              <svg><use href="#i-chevron-down"></use></svg>
+            </label>
+            <label class="select-wrap">
+              <span class="sr-only">排序方式</span>
+              <select id="sortOrder" aria-label="排序方式">
+                <option value="desc">最近优先</option>
+                <option value="asc">最早优先</option>
+              </select>
+              <svg><use href="#i-chevron-down"></use></svg>
+            </label>
+            <button class="clear-filter" type="button" id="clearFilters" hidden>清除筛选</button>
+          </div>
+        </section>
+
+        <div class="result-bar">
+          <p id="resultSummary" aria-live="polite">共 0 道错题</p>
+          <span class="result-line"></span>
+          <p class="result-note">慢慢来，弄懂一道是一道。</p>
+        </div>
+
+        <section class="record-list" id="recordList" aria-label="错题列表"></section>
+
+        <section class="empty-state" id="emptyState" hidden aria-live="polite">
+          <div class="empty-art" id="emptyArt" aria-hidden="true">
+            <svg viewBox="0 0 260 190" fill="none">
+              <path d="M42 143.5c24-7.5 46-4 70 9.5 24-13.5 46-17 70-9.5" stroke="#D9CDBA" stroke-width="2" stroke-linecap="round"/>
+              <path d="M78 55.5c21-9.5 40-8 60 4v76c-20-12-39-13.5-60-4v-76Z" fill="#FFFCF6" stroke="#BFB3A1" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M138 59.5c20-12 39-13.5 60-4v76c-21-9.5-40-8-60 4v-76Z" fill="#FBF7EF" stroke="#BFB3A1" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M91 74c12 .5 22 3.5 31 8M91 91c12 .5 22 3.5 31 8M91 108c12 .5 22 3.5 31 8" stroke="#D6CAB9" stroke-width="2" stroke-linecap="round"/>
+              <path d="M153 86c10-4 20-4 30 0M153 103c10-4 20-4 30 0M153 120c10-4 20-4 30 0" stroke="#D6CAB9" stroke-width="2" stroke-linecap="round"/>
+              <path d="m179 52 5.8 11.7 13 1.9-9.4 9.1 2.2 12.9-11.6-6.1-11.6 6.1 2.2-12.9-9.4-9.1 13-1.9L179 52Z" fill="#E9C98B" stroke="#B48C4F" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M172 78.8c4.5-1.7 9.3-1.7 13.8 0" stroke="#B48C4F" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M199 115 218 96l9 9-19 19-12 3 3-12Z" fill="#F0B8A4" stroke="#A95C44" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="m214 100 9 9" stroke="#A95C44" stroke-width="1.7"/>
+              <circle cx="61" cy="98" r="4" fill="#C45F43" opacity=".65"/>
+              <circle cx="66" cy="87" r="2.5" fill="#7C9270" opacity=".7"/>
+              <path d="M48 64c2.5 4.5 2.5 8.5 0 13M55 61c2.5 4.5 2.5 8.5 0 13" stroke="#BFAF98" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M216 58c2 3.5 2 6.5 0 10M223 56c2 3.5 2 6.5 0 10" stroke="#BFAF98" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="empty-kicker">START A NEW PAGE</p>
+          <h3 id="emptyTitle">这里还空着，等你写下第一道错题。</h3>
+          <p class="empty-desc" id="emptyDesc">别急着把错题翻篇。把它留下来，拆开看看是哪里卡住了，下一次就会不一样。</p>
+          <div class="empty-actions" id="emptyActions">
+            <button class="btn btn-primary" type="button" data-empty-action="add">
+              <svg><use href="#i-plus"></use></svg>记下第一道错题
+            </button>
+            <button class="btn btn-ghost" type="button" data-empty-action="sample">
+              <svg><use href="#i-sparkle"></use></svg>载入示例看看
+            </button>
+          </div>
+          <p class="empty-tip">所有内容只保存在你的浏览器里，不会上传到任何服务器。</p>
+        </section>
+
+        <footer class="page-footer">
+          <p>错题不是终点，是下一次答对的伏笔。</p>
+          <span>错题手账 · 考研版</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- 新增 / 编辑错题 -->
+  <dialog class="sheet" id="recordDialog" aria-labelledby="recordDialogTitle">
+    <form id="recordForm">
+      <header class="sheet-head">
+        <div>
+          <p class="sheet-kicker" id="sheetKicker">NEW MISTAKE NOTE</p>
+          <h2 id="recordDialogTitle">记一道错题</h2>
+          <p class="sheet-sub" id="sheetSub">写下来的思考，才会真正留下来。</p>
+        </div>
+        <button class="icon-btn sheet-close" type="button" id="closeRecordBtn" aria-label="关闭">
+          <svg><use href="#i-close"></use></svg>
+        </button>
+      </header>
+
+      <div class="sheet-body">
+        <div class="form-grid form-grid-top">
+          <label class="field">
+            <span class="field-label">日期</span>
+            <span class="date-input-wrap">
+              <input type="date" id="fDate" required>
+              <svg><use href="#i-calendar"></use></svg>
+            </span>
+          </label>
+          <fieldset class="field subject-fieldset">
+            <legend class="field-label">学科</legend>
+            <div class="subject-choices" id="subjectChoices" role="group" aria-label="选择学科"></div>
+          </fieldset>
+        </div>
+
+        <div class="form-grid form-grid-three form-grid-classify">
+          <label class="field">
+            <span class="field-label">模块</span>
+            <input type="text" id="fModule" list="moduleOptions" maxlength="40" placeholder="如：高等数学">
+          </label>
+          <label class="field">
+            <span class="field-label">章节 / 题型</span>
+            <input type="text" id="fChapter" list="chapterOptions" maxlength="40" placeholder="如：中值定理">
+          </label>
+          <label class="field">
+            <span class="field-label">具体考点 <em class="is-optional">可选</em></span>
+            <input type="text" id="fTopic" maxlength="80" placeholder="如：辅助函数构造">
+          </label>
+        </div>
+        <datalist id="moduleOptions"></datalist>
+        <datalist id="chapterOptions"></datalist>
+        <p class="classification-hint">选好学科后可以直接从建议里选，也可以手动填写自己课程里的章节。</p>
+
+        <div class="form-grid form-grid-source">
+          <label class="field">
+            <span class="field-label">题目来源</span>
+            <span class="select-wrap form-select">
+              <select id="fSourceType">
+                <option value="课程例题">课程例题</option>
+                <option value="课后题">课后题</option>
+                <option value="习题册">习题册</option>
+                <option value="真题">真题</option>
+                <option value="模拟题">模拟题</option>
+                <option value="其他">其他</option>
+              </select>
+              <svg><use href="#i-chevron-down"></use></svg>
+            </span>
+          </label>
+          <label class="field">
+            <span class="field-label">具体来源 <em class="is-optional">可选</em></span>
+            <input type="text" id="fSourceDetail" maxlength="80" placeholder="如：起点控制基础 第3讲 / 2024真题">
+          </label>
+        </div>
+
+        <fieldset class="field stage-field">
+          <legend class="field-label">学习阶段</legend>
+          <div class="stage-choices" id="stageChoices" role="group" aria-label="选择学习阶段"></div>
+        </fieldset>
+
+        <label class="field">
+          <span class="field-label">题目 <em>必填</em></span>
+          <textarea id="fQuestion" rows="4" maxlength="5000" required placeholder="把题干抄下来，或者只写下关键信息。&#10;例如：已知函数 f(x)=x³−3x²+2，求它在 [−1,3] 上的最值。"></textarea>
+          <span class="field-hint">换行、符号都可以保留。题干较长也没关系。</span>
+        </label>
+
+        <div class="field">
+          <div class="field-head">
+            <span class="field-label">题目图片 <em class="is-optional">可选</em></span>
+            <span class="field-hint">最多 3 张 · 自动压缩</span>
+          </div>
+          <button class="dropzone" type="button" id="dropzone">
+            <span class="dropzone-icon"><svg><use href="#i-image"></use></svg></span>
+            <span class="dropzone-copy">
+              <strong>点击上传，或把图片拖进来</strong>
+              <small>也支持直接粘贴截图 · JPG / PNG / WebP</small>
+            </span>
+          </button>
+          <input type="file" id="imageInput" accept="image/*" multiple hidden>
+          <div class="image-preview" id="imagePreview"></div>
+        </div>
+
+        <div class="form-grid">
+          <label class="field">
+            <span class="field-label">我的答案</span>
+            <textarea id="fMyAnswer" rows="3" maxlength="3000" placeholder="当时是怎么想的、怎么写的？"></textarea>
+          </label>
+          <label class="field">
+            <span class="field-label">正确答案 / 解法</span>
+            <textarea id="fCorrect" rows="3" maxlength="3000" placeholder="正确的思路和答案是什么？"></textarea>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">错因复盘</span>
+          <textarea id="fReason" rows="3" maxlength="3000" placeholder="当时为什么错？是概念、计算、审题，还是方法没想到？下次如何避免？"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field-label">知识点分析 <em class="is-optional">可选</em></span>
+          <textarea id="fKnowledgeAnalysis" rows="3" maxlength="3000" placeholder="这道题考了哪些知识点？它们之间怎么联系？你是看到哪个条件，想到这个切入点的？"></textarea>
+          <span class="field-hint">写下“考什么”和“怎么想到”，比只贴标签更接近真正的理解。</span>
+        </label>
+
+        <fieldset class="field causes-fieldset">
+          <legend class="field-label">错因标签 <em class="is-optional">可多选</em></legend>
+          <div class="cause-chips" id="causeChips" role="group" aria-label="选择错因标签"></div>
+        </fieldset>
+
+        <label class="field">
+          <span class="field-label">补充标签 <em class="is-optional">可选</em></span>
+          <input type="text" id="fTags" maxlength="120" placeholder="用逗号分隔，例如：辅助函数，端点比较，易错">
+          <span class="field-hint">用于补充搜索，不替代上面的章节和考点。</span>
+        </label>
+
+        <div class="review-stage-note" id="stageNote" hidden></div>
+
+        <label class="mastered-toggle">
+          <input type="checkbox" id="fMastered">
+          <span class="switch-ui" aria-hidden="true"></span>
+          <span class="mastered-copy">
+            <strong>已完全掌握（稳了）</strong>
+            <small>勾选后不再进入今日复习；仍会保留在「已掌握」里。</small>
+          </span>
+        </label>
+        <p class="form-schedule-hint">未勾选时，系统会按 <b>1 / 3 / 7 / 15 / 30 天</b> 自动安排下一次复习；每次重做会重新计算。</p>
+      </div>
+
+      <footer class="sheet-foot">
+        <p class="save-note"><svg><use href="#i-lock"></use></svg>自动保存在本机浏览器</p>
+        <div class="sheet-actions">
+          <button class="btn btn-ghost" type="button" id="cancelRecordBtn">取消</button>
+          <button class="btn btn-primary" type="submit" id="saveRecordBtn">保存错题</button>
+        </div>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- 重做模式 -->
+  <dialog class="review-dialog" id="reviewDialog" aria-labelledby="reviewDialogTitle">
+    <div class="review-shell">
+      <header class="review-head">
+        <div class="review-brand">
+          <p class="eyebrow"><span></span>REWORK MODE</p>
+          <h2 id="reviewDialogTitle">错题重做</h2>
+        </div>
+        <div class="review-head-right">
+          <span class="review-timer" id="reviewTimer"><svg><use href="#i-timer"></use></svg><b>00:00</b></span>
+          <span class="review-counter" id="reviewCounter">0 / 0</span>
+          <button class="icon-btn" type="button" id="closeReviewBtn" aria-label="结束重做">
+            <svg><use href="#i-close"></use></svg>
+          </button>
+        </div>
+      </header>
+      <div class="review-progress" aria-hidden="true"><i id="reviewProgressBar"></i></div>
+      <div class="review-content" id="reviewContent" tabindex="-1"></div>
+    </div>
+  </dialog>
+
+  <!-- 学习看板 -->
+  <dialog class="dashboard-dialog" id="dashboardDialog" aria-labelledby="dashboardTitle">
+    <div class="dashboard-shell">
+      <header class="dashboard-head">
+        <div>
+          <p class="eyebrow"><span></span>STUDY DASHBOARD</p>
+          <h2 id="dashboardTitle">学习看板</h2>
+          <p class="dashboard-sub">只盯着最值得补的地方，不平均用力。</p>
+        </div>
+        <button class="icon-btn" type="button" id="closeDashboardBtn" aria-label="关闭学习看板">
+          <svg><use href="#i-close"></use></svg>
+        </button>
+      </header>
+      <div class="dashboard-content" id="dashboardContent" tabindex="-1"></div>
+    </div>
+  </dialog>
+
+  <!-- 通用确认框 -->
+  <dialog class="confirm-dialog" id="confirmDialog" aria-labelledby="confirmTitle">
+    <div class="confirm-mark" aria-hidden="true">?</div>
+    <h2 id="confirmTitle">确认操作</h2>
+    <p id="confirmMessage"></p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" type="button" id="confirmCancel">取消</button>
+      <button class="btn btn-primary" type="button" id="confirmOk">确认</button>
+    </div>
+  </dialog>
+
+  <!-- 图片查看 -->
+  <dialog class="image-dialog" id="imageDialog" aria-label="查看题目图片">
+    <button class="icon-btn lightbox-close" type="button" id="closeImageBtn" aria-label="关闭图片">
+      <svg><use href="#i-close"></use></svg>
+    </button>
+    <img id="lightboxImage" alt="题目图片">
+  </dialog>
+
+  <div class="ios-install-hint" id="iosInstallHint" hidden>
+    <span class="ios-install-icon"><svg><use href="#i-share"></use></svg></span>
+    <div class="ios-install-copy">
+      <strong>安装到主屏幕</strong>
+      <p>点 Safari 的分享按钮，再选择「添加到主屏幕」。</p>
+    </div>
+    <button class="icon-btn" type="button" id="dismissIosInstall" aria-label="关闭安装提示">
+      <svg><use href="#i-close"></use></svg>
+    </button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <div class="noscript">这个错题手账需要启用 JavaScript 才能记录内容。</div>
+  </noscript>
+
+  <script src="app.js"></script>
+</body>
+</html>
